@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_150857) do
+ActiveRecord::Schema.define(version: 2020_01_17_161425) do
 
   create_table "merchants", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 2020_01_17_150857) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_merchants_on_email"
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.string "type"
+    t.integer "merchant_id", null: false
+    t.string "uuid", null: false
+    t.float "amount"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["merchant_id"], name: "index_transactions_on_merchant_id"
   end
 
 end

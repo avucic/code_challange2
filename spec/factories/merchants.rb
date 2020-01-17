@@ -8,7 +8,7 @@
 #  name                  :string
 #  email                 :string
 #  status                :boolean          default(FALSE)
-#  total_transaction_sum :integer          default(0)
+#  total_transaction_sum :float            default(0.0)
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #

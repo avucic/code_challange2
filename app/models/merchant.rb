@@ -8,12 +8,14 @@
 #  name                  :string
 #  email                 :string
 #  status                :boolean          default(FALSE)
-#  total_transaction_sum :integer          default(0)
+#  total_transaction_sum :float            default(0.0)
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
 
 class Merchant < ApplicationRecord
+  has_many :transactions, dependent: :destroy
+
   validates :name, :email, presence: true
   # NOTE for testing purspose, I'm using this simple regext
   # For more robust validation, I would use something like: gem valid_email2

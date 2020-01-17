@@ -8,7 +8,7 @@
 #  name                  :string
 #  email                 :string
 #  status                :boolean          default(FALSE)
-#  total_transaction_sum :integer          default(0)
+#  total_transaction_sum :float            default(0.0)
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
@@ -17,6 +17,8 @@ require 'rails_helper'
 
 RSpec.describe Merchant, type: :model do
   subject(:model) { described_class.new }
+
+  it { is_expected.to have_many(:transactions).dependent(:destroy) }
 
   context 'with validations' do
     it { is_expected.to validate_presence_of(:name) }
