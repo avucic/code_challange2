@@ -1,0 +1,76 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+
+AllCops:
+  EnabledByDefault: true
+  TargetRubyVersion: 2.6.5
+  Exclude:
+    - 'app/views/**/*'
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'vendor/bundle/**/*'
+    - 'node_modules/**/*'
+
+# Disable block length for RSpec outer blocks, configuration files, namespaces.
+Metrics/BlockLength:
+  Enabled: true
+  ExcludedMethods: [
+      'shared_examples', # RSpec
+      'describe', # RSpec
+      'context', # RSpec
+      'it', # RSpec
+      'feature', # RSpec
+      'configure', # RSpec
+      'shared_examples_for', # RSpec
+      'guard', # Guard
+      'namespace',
+      'define', # FactoryBot
+      'factory', # FactoryBot
+    ]
+RSpec/MultipleExpectations:
+  Enabled: true
+  Exclude:
+    - 'spec/features/**/*'
+
+RSpec/ExampleLength:
+  Enabled: true
+  Exclude:
+    - 'spec/features/**/*'
+
+Layout/LineLength:
+  Enabled: true
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentationMethod:
+  Enabled: false
+
+Style/Copyright:
+  Enabled: false
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: false
+
+Style/InlineComment:
+  Enabled: false
+
+Style/StringHashKeys:
+  AutoCorrect: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+Layout/DefEndAlignment:
+  AutoCorrect: true
+
+Bundler/GemComment:
+  Enabled: false
+
+Lint/NumberConversion:
+  AutoCorrect: false
