@@ -19,4 +19,14 @@ class Transaction < ApplicationRecord
 
   # force subclasses to be used for transaction creation
   validates :type, presence: true
+
+  enum status: { pending: 0, processed: 1, error: 2 }
+
+  before_create :generate_uuid
+
+  private
+
+  def generate_uuid
+    self.uuid = SecureRandom.uuid
+  end
 end

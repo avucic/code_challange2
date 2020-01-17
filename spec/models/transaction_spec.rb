@@ -25,5 +25,17 @@ RSpec.describe Transaction, type: :model do
 
   context 'with validations' do
     it { is_expected.to validate_presence_of(:type) }
+
+    it do
+      expect(transaction).to define_enum_for(:status).with_values(
+        pending: 0, processed: 1, error: 2
+      )
+    end
+  end
+
+  context 'with defaults' do
+    it 'generates uuid' do
+      expect { transaction.run_callbacks :create }.to change(transaction, :uuid)
+    end
   end
 end
