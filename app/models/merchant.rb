@@ -14,7 +14,9 @@
 #
 
 class Merchant < ApplicationRecord
-  has_many :transactions, dependent: :destroy
+  include Transactionable
+
+  acts_as_transactions_owner
 
   validates :name, :email, presence: true
   # NOTE for testing purspose, I'm using this simple regext

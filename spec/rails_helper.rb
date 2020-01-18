@@ -44,6 +44,8 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.extend WithModel

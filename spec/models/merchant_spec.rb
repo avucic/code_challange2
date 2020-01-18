@@ -33,4 +33,6 @@ RSpec.describe Merchant, type: :model do
   context 'with default vallues' do
     it { expect(model.status).to be(false) }
   end
+
+  it_behaves_like 'transactions owner'
 end

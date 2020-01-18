@@ -24,8 +24,6 @@ RSpec.describe Transaction, type: :model do
   it { is_expected.to belong_to(:merchant) }
 
   context 'with validations' do
-    it { is_expected.to validate_presence_of(:type) }
-
     it do
       expect(transaction).to define_enum_for(:status).with_values(
         pending: 0, processed: 1, error: 2
@@ -46,4 +44,6 @@ RSpec.describe Transaction, type: :model do
       expect(transaction.name).to eq :foo
     end
   end
+
+  it_behaves_like 'transactionable'
 end

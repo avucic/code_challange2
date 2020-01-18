@@ -15,10 +15,11 @@
 #
 
 class Transaction < ApplicationRecord
+  include Transactionable
+
   belongs_to :merchant
 
-  # force subclasses to be used for transaction creation
-  validates :type, presence: true
+  allow_transaction_types :initial, :refund, :settlement, :invalidation
 
   enum status: { pending: 0, processed: 1, error: 2 }
 
