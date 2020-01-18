@@ -24,6 +24,10 @@ class Transaction < ApplicationRecord
 
   before_create :generate_uuid
 
+  def name
+    @name ||= type.underscore&.gsub(/_transaction$/, '')&.to_sym
+  end
+
   private
 
   def generate_uuid

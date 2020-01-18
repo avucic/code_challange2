@@ -38,4 +38,12 @@ RSpec.describe Transaction, type: :model do
       expect { transaction.run_callbacks :create }.to change(transaction, :uuid)
     end
   end
+
+  describe '#name' do
+    subject(:transaction) { build(:transaction, type: 'FooTransaction') }
+
+    it 'generate name based on the type value' do
+      expect(transaction.name).to eq :foo
+    end
+  end
 end
