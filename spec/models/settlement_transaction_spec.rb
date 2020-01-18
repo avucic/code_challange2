@@ -17,5 +17,27 @@
 require 'rails_helper'
 
 RSpec.describe SettlementTransaction, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject(:model) { described_class.new merchant: merchant }
+
+  describe 'Validations' do
+    context 'without previous transactions' do
+      let(:merchant) { build_stubbed(:merchant) }
+
+      it { is_expected.to have(1).error_on(:base) }
+    end
+
+    context 'with not supported previous transaction' do
+      let(:not_supported_transaction) { build_stubbed(:transaction, :refund) }
+      let(:merchant) { build_stubbed(:merchant, transactions: [not_supported_transaction]) }
+
+      it { is_expected.to have(1).error_on(:base) }
+    end
+
+    context 'with supported previous (settlement) transaction' do
+      let(:transaction) { build_stubbed(:transaction, :initial) }
+      let(:merchant) { build_stubbed(:merchant, transactions: [transaction]) }
+
+      it { is_expected.to have(0).error_on(:base) }
+    end
+  end
 end

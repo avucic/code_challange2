@@ -15,4 +15,5 @@
 #
 
 class InvalidationTransaction < Transaction
+  validates_with TransactionFlowValidator, from: :initial
 end

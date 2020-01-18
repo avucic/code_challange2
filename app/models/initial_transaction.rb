@@ -15,4 +15,5 @@
 #
 
 class InitialTransaction < Transaction
+  validates_with TransactionFlowValidator, from: %i[none invalidation settlement]
 end

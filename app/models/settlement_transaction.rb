@@ -14,6 +14,6 @@
 #  updated_at  :datetime         not null
 #
 
-
 class SettlementTransaction < Transaction
+  validates_with TransactionFlowValidator, from: :initial
 end
