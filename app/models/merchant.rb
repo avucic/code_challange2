@@ -22,4 +22,8 @@ class Merchant < ApplicationRecord
   # NOTE for testing purspose, I'm using this simple regext
   # For more robust validation, I would use something like: gem valid_email2
   validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, uniqueness: true
+
+  def update_total_transaction_sum
+    update(total_transaction_sum: transactions.sum(:amount))
+  end
 end

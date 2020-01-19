@@ -34,5 +34,19 @@ RSpec.describe Merchant, type: :model do
     it { expect(model.status).to be(false) }
   end
 
+  describe '#update_total_transaction_sum' do
+    let(:merchant)     { build_stubbed(:merchant)           }
+    let(:transactions) { double('transactions', sum: 100.0) }
+
+    before do
+      allow(merchant).to receive(:transactions).and_return(transactions)
+      allow(merchant).to receive(:update).with(total_transaction_sum: 100.0)
+
+      merchant.update_total_transaction_sum
+    end
+
+    it { expect(merchant).to have_received(:update) }
+  end
+
   it_behaves_like 'transactions owner'
 end

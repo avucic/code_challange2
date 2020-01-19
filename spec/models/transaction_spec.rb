@@ -21,6 +21,8 @@ RSpec.describe Transaction, type: :model do
 
   let(:merchant) { build_stubbed(:merchant) }
 
+  before { allow(merchant).to receive(:update_total_transaction_sum) }
+
   it { is_expected.to belong_to(:merchant) }
 
   context 'with validations' do
@@ -42,6 +44,48 @@ RSpec.describe Transaction, type: :model do
 
     it 'generate name based on the type value' do
       expect(transaction.name).to eq :foo
+    end
+  end
+
+  describe 'merchant#total_transaction_sum' do
+    context 'when transaction is created' do
+      let(:merchant) { build_stubbed(:merchant) }
+      let(:transaction) { build_stubbed(:transaction, merchant: merchant) }
+
+      before do
+        transaction.run_callbacks(:create)
+      end
+
+      it 'updates merchant total_transaction_sum' do
+        expect(merchant).to have_received(:update_total_transaction_sum)
+      end
+    end
+
+    context 'when transaction amount is updated' do
+      let(:merchant) { build_stubbed(:merchant) }
+      let(:transaction) { build_stubbed(:transaction, amount: 100, merchant: merchant) }
+
+      before do
+        transaction.amount = 200.0
+        transaction.run_callbacks(:update)
+      end
+
+      it 'updates merchant total_transaction_sum' do
+        expect(merchant).to have_received(:update_total_transaction_sum)
+      end
+    end
+
+    context 'when transaction amount is not updated' do
+      let(:merchant) { build_stubbed(:merchant) }
+      let(:transaction) { build_stubbed(:transaction, amount: 100, merchant: merchant) }
+
+      before do
+        transaction.run_callbacks(:update)
+      end
+
+      it 'updates merchant total_transaction_sum' do
+        expect(merchant).not_to have_received(:update_total_transaction_sum)
+      end
     end
   end
 
