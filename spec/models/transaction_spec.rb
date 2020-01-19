@@ -39,6 +39,21 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
+  describe 'scopes' do
+    context 'with outdated' do
+      let(:merchant) { create(:merchant) }
+
+      before do
+        create(:transaction, :refund, merchant: merchant)
+        create(:transaction, :refund, merchant: merchant, created_at: Time.zone.now - 2.hours)
+      end
+
+      it 'returns outdated transactions' do
+        expect(described_class.outdated.count).to eq(1)
+      end
+    end
+  end
+
   describe '#name' do
     subject(:transaction) { build(:transaction, type: 'FooTransaction') }
 
@@ -49,7 +64,7 @@ RSpec.describe Transaction, type: :model do
 
   describe 'merchant#total_transaction_sum' do
     context 'when transaction is created' do
-      let(:merchant) { build_stubbed(:merchant) }
+      let(:merchant)    { build_stubbed(:merchant)                        }
       let(:transaction) { build_stubbed(:transaction, merchant: merchant) }
 
       before do

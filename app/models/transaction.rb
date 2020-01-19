@@ -23,6 +23,8 @@ class Transaction < ApplicationRecord
 
   enum status: { pending: 0, processed: 1, error: 2 }
 
+  scope :outdated, -> { where('created_at <= ?', 1.hour.ago) }
+
   before_create :generate_uuid
   after_create :update_merchant_total_transaction_sum
 
