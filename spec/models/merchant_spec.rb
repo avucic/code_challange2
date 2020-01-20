@@ -34,6 +34,20 @@ RSpec.describe Merchant, type: :model do
     it { expect(model.status).to be(false) }
   end
 
+  describe '#scopes' do
+    context 'with active scope' do
+      subject(:sql) { described_class.active.to_sql }
+
+      it { is_expected.to eq(described_class.unscoped.where(status: true).to_sql) }
+    end
+
+    context 'with inactive scope' do
+      subject(:sql) { described_class.inactive.to_sql }
+
+      it { is_expected.to eq(described_class.unscoped.where(status: false).to_sql) }
+    end
+  end
+
   describe '#update_total_transaction_sum' do
     let(:merchant)     { build_stubbed(:merchant)           }
     let(:transactions) { double('transactions', sum: 100.0) }

@@ -18,6 +18,9 @@ class Merchant < ApplicationRecord
 
   acts_as_transactions_owner
 
+  scope :active, -> { where(status: true) }
+  scope :inactive, -> { where(status: false) }
+
   validates :name, :email, presence: true
   # NOTE for testing purspose, I'm using this simple regext
   # For more robust validation, I would use something like: gem valid_email2

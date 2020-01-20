@@ -13,7 +13,7 @@ class AuthenticateService < ApplicationService
 
   def merchant
     id = decoded_auth_token[:merchant_id]
-    Merchant.find(id)
+    Merchant.active.find(id)
   rescue StandardError => e
     context.error = 'Invalid authentication'
     context.fail!

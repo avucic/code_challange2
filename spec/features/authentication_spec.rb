@@ -3,16 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant sign in', type: :feature do
-<<<<<<< Updated upstream
   let(:merchant) { build_stubbed(:merchant) }
 
-  before { allow(Merchant).to receive(:find).and_return(merchant) }
-=======
   before do
     allow(Merchant).to receive(:active).and_return(Merchant)
     allow(Merchant).to receive(:find).with(merchant.id).and_return(merchant)
   end
->>>>>>> Stashed changes
 
   describe 'Sign in', type: :feature do
     let(:merchant) { build_stubbed(:merchant) }

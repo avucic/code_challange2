@@ -10,7 +10,10 @@ RSpec.describe AuthenticateService do
     context 'when valid credentials' do
       subject(:context) { described_class.call(token: token) }
 
-      before { allow(Merchant).to receive(:find).with(merchant.id).and_return(merchant) }
+      before do
+        allow(Merchant).to receive(:active).and_return(Merchant)
+        allow(Merchant).to receive(:find).with(merchant.id).and_return(merchant)
+      end
 
       it { expect(context.merchant).to eq merchant }
     end

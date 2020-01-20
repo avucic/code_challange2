@@ -14,7 +14,10 @@ RSpec.describe AuthorizeApiRequestService do
 
     let(:token) { valid_token }
 
-    before { allow(Merchant).to receive(:find).with(merchant.id).and_return(merchant) }
+    before do
+      allow(Merchant).to receive(:active).and_return(Merchant)
+      allow(Merchant).to receive(:find).with(merchant.id).and_return(merchant)
+    end
 
     it 'returns merchant object' do
       expect(context.merchant).to eq(merchant)

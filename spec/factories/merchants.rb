@@ -17,8 +17,9 @@ FactoryBot.define do
   factory(:merchant) do
     email { Faker::Internet.email.gsub(/@.*$/, '@emerchantpaym.com') }
     name { Faker::Name.name }
-    trait :active do
-      status { true }
+    status { true }
+    trait :inactive do
+      status { false }
     end
   end
 end
