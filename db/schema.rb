@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_161425) do
+ActiveRecord::Schema.define(version: 2020_01_20_172504) do
 
   create_table "merchants", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_161425) do
     t.float "total_transaction_sum", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "roles_mask"
     t.index ["email"], name: "index_merchants_on_email"
   end
 

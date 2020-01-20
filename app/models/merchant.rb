@@ -15,7 +15,9 @@
 
 class Merchant < ApplicationRecord
   include Transactionable
+  include RoleModel
 
+  roles :admin, :merchant
   acts_as_transactions_owner
 
   scope :active, -> { where(status: true) }
@@ -26,11 +28,19 @@ class Merchant < ApplicationRecord
   # For more robust validation, I would use something like: gem valid_email2
   validates :email, format: { with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }, uniqueness: true
 
+  before_create :set_default_role
+
   def update_total_transaction_sum
     update(total_transaction_sum: transactions.sum(:amount))
   end
 
   def mark_as_inactive!
     update(status: false)
+  end
+
+  private
+
+  def set_default_role
+    roles << :merchant
   end
 end

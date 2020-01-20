@@ -30,6 +30,12 @@ RSpec.describe Merchant, type: :model do
     it { is_expected.to validate_uniqueness_of(:email) }
   end
 
+  context 'with default setup' do
+    before { model.run_callbacks :create }
+
+    it { is_expected.to have_role :merchant }
+  end
+
   context 'with default vallues' do
     it { expect(model.status).to be(false) }
   end
