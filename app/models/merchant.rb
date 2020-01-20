@@ -29,4 +29,8 @@ class Merchant < ApplicationRecord
   def update_total_transaction_sum
     update(total_transaction_sum: transactions.sum(:amount))
   end
+
+  def mark_as_inactive!
+    update(status: false)
+  end
 end

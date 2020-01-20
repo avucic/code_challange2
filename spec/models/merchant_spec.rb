@@ -62,5 +62,17 @@ RSpec.describe Merchant, type: :model do
     it { expect(merchant).to have_received(:update) }
   end
 
+  describe '#mark_as_inactive!' do
+    let(:merchant) { build_stubbed(:merchant) }
+
+    before do
+      allow(merchant).to receive(:update).with(status: false)
+
+      merchant.mark_as_inactive!
+    end
+
+    it { expect(merchant).to have_received(:update) }
+  end
+
   it_behaves_like 'transactions owner'
 end
