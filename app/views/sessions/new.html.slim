@@ -1,0 +1,8 @@
+h1 Login
+- if @error
+  h2= @error
+= form_for :session, url: sessions_path do |f|
+  .field
+    = f.label :token
+    = f.text_area :token
+    = f.button 'Login'
