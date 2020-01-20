@@ -29,14 +29,8 @@ RSpec.describe MerchantsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Merchant. As you add validations to Merchant, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
-  end
-
-  let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
-  end
-
+  let(:valid_attributes)   { build(:merchant).attributes }
+  let(:invalid_attributes) { { email: 'invalid' }        }
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # MerchantsController. Be sure to keep this updated too.
@@ -100,30 +94,28 @@ RSpec.describe MerchantsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      let(:merchant) { create(:merchant) }
+      let(:new_attributes) { { name: 'foo', email: 'foo@bar.com' } }
 
-      it 'updates the requested merchant' do
-        merchant = Merchant.create! valid_attributes
+      before do
         put :update, params: { id: merchant.to_param, merchant: new_attributes }, session: valid_session
-        merchant.reload
-        skip('Add assertions for updated state')
       end
 
-      it 'redirects to the merchant' do
-        merchant = Merchant.create! valid_attributes
-        put :update, params: { id: merchant.to_param, merchant: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(merchant)
-      end
+      it { expect(merchant.reload.name).to eq 'foo' }
+
+      it { expect(merchant.reload.email).to eq 'foo@bar.com' }
+
+      it { expect(response).to redirect_to(merchant) }
     end
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        merchant = Merchant.create! valid_attributes
+      let(:merchant) { create(:merchant) }
+
+      before do
         put :update, params: { id: merchant.to_param, merchant: invalid_attributes }, session: valid_session
-        expect(response).to be_successful
       end
+
+      it { expect(response).to be_successful }
     end
   end
 
@@ -132,7 +124,7 @@ RSpec.describe MerchantsController, type: :controller do
       merchant = Merchant.create! valid_attributes
       expect do
         delete :destroy, params: { id: merchant.to_param }, session: valid_session
-      end.to change(Merchant, :count).by(-1)
+      end.to change(Merchant.active, :count).by(-1)
     end
 
     it 'redirects to the merchants list' do
