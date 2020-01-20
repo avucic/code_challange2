@@ -8,4 +8,10 @@ Rails.application.routes.draw do
 
   resources :merchants
   resources :sessions, only: %i[new create destroy]
+
+  namespace :api do
+    namespace :v1 do
+      resources :transactions, only: %i[create], defaults: { format: %i[json xml] }
+    end
+  end
 end
