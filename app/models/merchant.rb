@@ -38,6 +38,14 @@ class Merchant < ApplicationRecord
     update(status: false)
   end
 
+  def active?
+    status?
+  end
+
+  def inactive?
+    !status?
+  end
+
   private
 
   def set_default_role

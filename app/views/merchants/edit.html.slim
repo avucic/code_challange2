@@ -1,8 +1,11 @@
-h1 Editing merchant
+.container
+  .columns.is-centered
+    .column
+      h1.title Editing merchant
 
-== render 'form'
+      == render 'form'
 
-=> link_to 'Show', @merchant
-'|
-=< link_to 'Back', merchants_path
+      => link_to 'Show', @merchant
+      '|
+      =< link_to 'Back', merchants_path
 

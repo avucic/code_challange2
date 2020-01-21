@@ -1,27 +1,44 @@
-h1 Listing merchants
+.container
+  h1.title.is-1.has-text-centered Listing merchants
 
-table
-  thead
-    tr
-      th Name
-      th Email
-      th Status
-      th Total transaction sum
-      th
-      th
-      th
+  .columns.is-centered
+    .column
+      table.table.is-fullwidth
+        thead
+          tr
+            th Status
+            th Role
+            th Name
+            th Email
+            th Status
+            th Total transaction sum
+            th
+            th
+            th
 
-  tbody
-    - @merchants.each do |merchant|
-      tr
-        td = merchant.name
-        td = merchant.email
-        td = merchant.status
-        td = merchant.total_transaction_sum
-        td = link_to 'Show', merchant
-        td = link_to 'Edit', edit_merchant_path(merchant)
-        td = link_to 'Destroy', merchant, data: { confirm: 'Are you sure?' }, method: :delete
+        tbody
+          - decorate( @merchants).each do |merchant|
+            tr
+              td
+                - if merchant.inactive?
+                  span.tag.is-normal.is-danger Inactive
+                - else
+                  span.tag.is-normal.is-warning Active
+              td
+                - merchant.roles.each do |role|
+                  span.tag.is-primary.is-normal=role
+              td = merchant.name
+              td = merchant.email
+              td = merchant.status
+              td = merchant.total_transaction_sum
+              td
+                = link_to_if can_manage_merchants?, 'Show', merchant, class:'button is-success'
+              td
+                .button.is-info disabled==!can_manage_merchants?
+                  = link_to_if can_manage_merchants?, 'Edit', edit_merchant_path(merchant),class:'has-text-white'
+              td
+                .button.is-danger disabled==!can_manage_merchants?
+                  = link_to_if can_manage_merchants?, 'Destroy', merchant, data: { confirm: 'Are you sure?' }, method: :delete,class:'has-text-white'
 
-br
-
-= link_to 'New Merchant', new_merchant_path
+        br
+        = link_to 'New Merchant', new_merchant_path

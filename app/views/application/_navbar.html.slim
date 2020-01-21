@@ -1,0 +1,15 @@
+nav.navbar.is-info
+  #main-nav.navbar-menu
+    .navbar-start
+      = link_to root_url, class: 'navbar-item' do
+        span.icon
+          i.far.fa-gem
+        span
+          | Home
+    -if logged_in?
+      .navbar-end
+        = link_to logout_url, class: 'navbar-item' do
+          span.icon
+            i.far.fa-star
+          span
+            | Logout
