@@ -54,6 +54,12 @@ rake data:import_merchants\['db/seeds/data.csv']
 rake api:token\['admin@example.com']
 ```
 
+## Run background jobs
+
+```
+bundle exec whenever
+```
+
 ## API
 
 ### Example of JSON request
